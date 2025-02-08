@@ -57,6 +57,7 @@ router.get('/search/:id', authUser, searchRestaurant)
 
 export default router
 
+//upload.single('image')
 
 // upload.fields([
 //     { name: 'menuItems[0].image1', maxCount: 1 },

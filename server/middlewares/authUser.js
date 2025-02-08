@@ -106,6 +106,8 @@ export const authUser = (req, res, next) => {
 
         req.user = tokenVerified;
         console.log("Hi==", req.user)
+        const userId = req.user.userId
+        console.log("USERID--",userId)
 
         next();
     } catch (error) {

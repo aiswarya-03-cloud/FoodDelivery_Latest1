@@ -339,7 +339,11 @@ export const getRestaurantByMenuItem = async (req, res) => {
 export const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("Idd-->", id)
     const { name, description, location } = req.body;
+    console.log("NAME--", name)
+    console.log("DESCRIPTION--", description)
+    console.log("LOCATION--", location)
 
     // Fetch the restaurant to update
     const restaurant = await Restaurant.findById(id);
@@ -347,34 +351,35 @@ export const updateRestaurant = async (req, res) => {
 
     // Update basic restaurant info
     if (name) restaurant.name = name;
+    console.log("Updated NAME--", name)
     if (description) restaurant.description = description;
     if (location) restaurant.location = location;
 
     // Loop over req.files to handle image uploads
-    for (const key of Object.keys(req.files)) {
-      const match = key.match(/^menuItems\[(\d+)\]\.(image1|image2)$/); // Match pattern for image1 or image2
-      if (match) {
-        const index = match[1]; // Extract index (e.g., 0, 1, 2)
-        const field = match[2]; // Extract image1 or image2
+    // for (const key of Object.keys(req.files)) {
+    //   const match = key.match(/^menuItems\[(\d+)\]\.(image1|image2)$/); // Match pattern for image1 or image2
+    //   if (match) {
+    //     const index = match[1]; // Extract index (e.g., 0, 1, 2)
+    //     const field = match[2]; // Extract image1 or image2
 
-        if (restaurant.menuItems[index]) {
-          const itemName = restaurant.menuItems[index].name;
+    //     if (restaurant.menuItems[index]) {
+    //       const itemName = restaurant.menuItems[index].name;
 
-          // Upload the image
-          const imageFile = req.files[key]?.[0]; // Get the file from req.files
-          if (imageFile) {
-            try {
-              const uploadedImage = await cloudinaryInstance.uploader.upload(imageFile.path);
-              restaurant.menuItems[index][field] = uploadedImage.secure_url; // Update the URL in menu item
-            } catch (error) {
-              throw new Error(`${field} upload failed for ${itemName}`);
-            }
-          }
-        } else {
-          console.error(`Menu item at index ${index} does not exist`);
-        }
-      }
-    }
+    //       // Upload the image
+    //       const imageFile = req.files[key]?.[0]; // Get the file from req.files
+    //       if (imageFile) {
+    //         try {
+    //           const uploadedImage = await cloudinaryInstance.uploader.upload(imageFile.path);
+    //           restaurant.menuItems[index][field] = uploadedImage.secure_url; // Update the URL in menu item
+    //         } catch (error) {
+    //           throw new Error(`${field} upload failed for ${itemName}`);
+    //         }
+    //       }
+    //     } else {
+    //       console.error(`Menu item at index ${index} does not exist`);
+    //     }
+    //   }
+    // }
 
     // Update other fields for menu items (dynamically parse req.body keys)
     for (const key of Object.keys(req.body)) {

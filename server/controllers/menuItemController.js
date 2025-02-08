@@ -259,8 +259,8 @@ export const getMenuItems = async (req, res) => {
 //Get menu item by Id
 export const menuItemById = async (req, res) => {
     try {
-        const itemById = await Restaurant.findById(req.params.id)
-        console.log(itemById);
+        const itemById = await Menu.findById(req.params.id)
+        console.log("Item---", itemById);
         
         res.status(201).json({success: true, message: itemById.name +  ' data received successfully', itemById})
 
@@ -272,8 +272,8 @@ export const menuItemById = async (req, res) => {
 //Update menu item
 export const updateMenuItem = async (req, res) => {
     try {
-        await Menu.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        res.status(201).json({ success: true, message: 'Item updated' })
+        const updatedMenuItem = await Menu.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.status(201).json({ data: updatedMenuItem,success: true, message: 'Item updated' })
     } catch (error) {
         res.status(404).json({ success: false, message: 'Item not found' })
     }
