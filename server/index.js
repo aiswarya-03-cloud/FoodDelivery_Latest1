@@ -11,8 +11,9 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:true,
-    Credentials:true
+    origin:"http://localhost:5173",
+    methods: ["GET","PUT","POST","DELETE", "OPTIONS"],
+    credentials:true,
 }))
 
 const port = 3000;
