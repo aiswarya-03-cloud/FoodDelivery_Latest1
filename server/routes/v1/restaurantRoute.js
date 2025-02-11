@@ -47,7 +47,7 @@ router.post('/create', authUser, authAdmin, upload.fields([
         { name: 'menuItems[2].image1', maxCount: 1 },
         { name: 'menuItems[2].image2', maxCount: 1 }
         ]), createRestaurant)
-router.get('/all-restaurants', authUser, getRestaurant)
+router.get('/all-restaurants', getRestaurant)
 router.get('/:id', authUser, getRestaurantById)
 router.get('/', authUser, getRestaurantByMenuItem)
 router.put('/:id', authUser, authAdmin, upload.single('image'), updateRestaurant)
